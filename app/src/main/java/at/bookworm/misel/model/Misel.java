@@ -11,6 +11,7 @@ import lombok.Data;
  */
 @Data
 public class Misel implements Serializable {
+    private DateTime birthDate;
     private static int hoursUntilStarving = 6;
     private static int hoursUntilGettingGrumpy = 3;
     private static int hoursBeingHappy = 1;
@@ -74,6 +75,13 @@ public class Misel implements Serializable {
 
     private String selectStarvingMessage() {
         return "This is a placeholder for a starving message";
+    }
+
+    public static Misel createMisel() {
+        Misel misel = new Misel();
+        misel.setBirthDate(DateTime.now());
+        misel.setMessage("So this is life. Hope they have food in here!");
+        return misel;
     }
 
 }

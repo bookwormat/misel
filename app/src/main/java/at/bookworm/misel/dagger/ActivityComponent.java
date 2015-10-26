@@ -1,6 +1,7 @@
 package at.bookworm.misel.dagger;
 
 import at.bookworm.misel.ui.BaseActivity;
+import at.bookworm.misel.ui.MiselActivityFragment;
 import dagger.Component;
 
 /**
@@ -10,5 +11,7 @@ import dagger.Component;
 @PerActivityScope
 public interface ActivityComponent {
 
-    void inject(BaseActivity baseActivity);
+    void inject(BaseActivity component);
+
+    void inject(MiselActivityFragment component);
 }

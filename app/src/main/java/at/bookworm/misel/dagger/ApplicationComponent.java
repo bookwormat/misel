@@ -3,6 +3,7 @@ package at.bookworm.misel.dagger;
 import javax.inject.Singleton;
 
 import at.bookworm.misel.MiselApplication;
+import at.bookworm.misel.storage.MiselStorage;
 import dagger.Component;
 
 /**
@@ -13,5 +14,7 @@ import dagger.Component;
 public interface ApplicationComponent {
 
     void injectApplication(MiselApplication application);
+
+    MiselStorage getMiselStorage();
 
 }
