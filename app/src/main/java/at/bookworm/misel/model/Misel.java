@@ -46,7 +46,15 @@ public class Misel implements Serializable {
         return DateTime.now().minusHours(hours).isBefore(lastMealTime);
     }
 
-    public String message() {
+    public void updateMessage() {
+        message = message();
+    }
+
+    public void feed() {
+        lastMealTime = DateTime.now();
+    }
+
+    private String message() {
         if (isStarving()) {
             return selectStarvingMessage();
         }
