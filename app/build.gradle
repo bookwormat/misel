@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "at.bookworm.misel"
+        minSdkVersion 22
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    apt "org.projectlombok:lombok:1.16.4"
+    provided "org.projectlombok:lombok:1.16.4"
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
+
+    compile("io.reactivex:rxandroid:1.0.1") {
+        transitive = false
+    }
+
+    compile("io.reactivex:rxjava:1.0.14") {
+        force = true
+    }
+
+    compile 'joda-time:joda-time:2.7'
+    compile 'org.joda:joda-convert:1.7'
+
+    apt 'com.google.dagger:dagger-compiler:2.0'
+    compile 'com.google.dagger:dagger:2.0'
+
+
+}
