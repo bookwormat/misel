@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 import at.bookworm.misel.R;
 import at.bookworm.misel.model.FoodStorage;
 import at.bookworm.misel.model.Misel;
+import at.bookworm.misel.model.NotEnoughFoodException;
 import at.bookworm.misel.storage.MiselStorage;
 
 /**
@@ -41,21 +43,38 @@ public class MiselActivityFragment extends BaseFragment {
         miselStorage.storeFoodStorage(foodStorage);
     }
 
+    public void feed() throws NotEnoughFoodException {
+        misel.feed(foodStorage);
+        updateUi(getView());
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_misel, container, false);
-        TextView messageTV = (TextView) view.findViewById(R.id.message);
-        messageTV.setText(misel.getMessage());
-
-        TextView birthDayTV = (TextView) view.findViewById(R.id.birthdayMessage);
-        birthDayTV.setText("I was born on " + misel.getBirthDate().toString());
-
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        updateUi(view);
     }
+
+    private void updateUi(View view) {
+        MiselUi miselUi = new MiselUi(getContext(), misel, foodStorage);
+        TextView messageTV = (TextView) view.findViewById(R.id.message);
+        messageTV.setText(miselUi.getMessage());
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.image);
+        imageView.setImageResource(miselUi.getImageRes());
+
+        TextView textView = (TextView) view.findViewById(R.id.foodLeft);
+        textView.setText(miselUi.getRemainingFood());
+
+        TextView lastMealTV = (TextView) view.findViewById(R.id.lastMeal);
+        lastMealTV.setText(miselUi.getLastMealTime());
+    }
+
+
 }

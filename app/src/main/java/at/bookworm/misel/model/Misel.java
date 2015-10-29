@@ -16,8 +16,7 @@ public class Misel implements Serializable {
     private static int hoursUntilGettingGrumpy = 3;
     private static int hoursBeingHappy = 1;
     private DateTime lastMealTime;
-    private String message;
-    private int portionSize;
+    private static int portionSize = 1;
 
     public Mood mood() {
         if (isStarving()) {
@@ -36,61 +35,22 @@ public class Misel implements Serializable {
     }
 
     private boolean isWellFed() {
-        return hoursReached(hoursBeingHappy);
-    }
-
-    private boolean isGrumpy() {
-        return hoursReached(hoursUntilGettingGrumpy);
+        return !hoursReached(hoursBeingHappy);
     }
 
     private boolean hoursReached(int hours) {
-        return DateTime.now().minusHours(hours).isBefore(lastMealTime);
+        return DateTime.now().minusHours(hours).isAfter(lastMealTime);
     }
 
-    public void updateMessage() {
-        message = message();
-    }
 
     public void feed(FoodStorage foodStorage) throws NotEnoughFoodException {
         foodStorage.take(portionSize);
         lastMealTime = DateTime.now();
     }
 
-    private String message() {
-        if (isStarving()) {
-            return selectStarvingMessage();
-        }
-        if (isWellFed()) {
-            return selectWellFedMessage();
-        }
-        if (isGrumpy()) {
-            return selectGrumpyMessage();
-        }
-
-        return selectRandomMessage();
-
-    }
-
-    private String selectRandomMessage() {
-        return "This is a placeholder for a random message";
-    }
-
-    private String selectGrumpyMessage() {
-        return "This is a placeholder for a grumpy message";
-    }
-
-    private String selectWellFedMessage() {
-        return "This is a placeholder for a well fed message";
-    }
-
-    private String selectStarvingMessage() {
-        return "This is a placeholder for a starving message";
-    }
-
     public static Misel createMisel() {
         Misel misel = new Misel();
         misel.setBirthDate(DateTime.now());
-        misel.setMessage("So this is life. Hope they have food in here!");
         return misel;
     }
 

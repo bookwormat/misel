@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import at.bookworm.misel.R;
+import at.bookworm.misel.model.NotEnoughFoodException;
 
 public class MiselActivity extends BaseActivity {
 
@@ -23,8 +24,15 @@ public class MiselActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "feeding Misel", Snackbar.LENGTH_LONG)
+                        .setAction("feed", null).show();
+                MiselActivityFragment fragment = (MiselActivityFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+                try {
+                    fragment.feed();
+                } catch (NotEnoughFoodException e) {
+                    Snackbar.make(view, "not enough Food", Snackbar.LENGTH_LONG)
+                            .setAction("feed", null).show();
+                }
             }
         });
     }
