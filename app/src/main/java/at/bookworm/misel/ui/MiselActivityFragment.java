@@ -10,6 +10,7 @@ import android.widget.TextView;
 import javax.inject.Inject;
 
 import at.bookworm.misel.R;
+import at.bookworm.misel.model.FoodStorage;
 import at.bookworm.misel.model.Misel;
 import at.bookworm.misel.storage.MiselStorage;
 
@@ -22,6 +23,7 @@ public class MiselActivityFragment extends BaseFragment {
     @Inject
     MiselStorage miselStorage;
 
+    private FoodStorage foodStorage;
     private Misel misel;
 
     @Override
@@ -29,12 +31,14 @@ public class MiselActivityFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         getActivityComponent().inject(this);
         misel = miselStorage.loadMisel();
+        foodStorage = miselStorage.loadFoodStorage();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         miselStorage.storeMisel(misel);
+        miselStorage.storeFoodStorage(foodStorage);
     }
 
     @Override
